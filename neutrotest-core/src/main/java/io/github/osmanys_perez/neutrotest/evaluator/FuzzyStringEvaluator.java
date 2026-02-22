@@ -70,14 +70,20 @@ public final class FuzzyStringEvaluator implements Evaluator<String> {
 
         // 3. Indeterminacy is the "unsure" part. It's highest when we are in the middle.
         // We model it as a Gaussian-like curve around 0.5, but scaled.
-        // Avoid negative values with Math.max(0, ...)
+        // For perfect matches (similarity=1.0) or complete mismatches (similarity=0.0), 
+        // we want indeterminacy to be exactly 0.0.
         double peakIndeterminacy = 0.5; // The similarity value where we are most unsure
         double spread = 0.2; // How wide the peak of indeterminacy is
-        double indeterminacy = 0.7 * Math.exp(-Math.pow((similarity - peakIndeterminacy) / spread, 2));
+        double indeterminacy;
+        if (similarity >= 1.0 || similarity <= 0.0) {
+            indeterminacy = 0.0;
+        } else {
+            indeterminacy = 0.7 * Math.exp(-Math.pow((similarity - peakIndeterminacy) / spread, 2));
+        }
 
         // 4. NORMALIZE: Ensure T + I + F <= 1.
-        // Our truth and falsity are already based on [0,1], but indeterminacy adds extra.
-        // We need to scale them down proportionally if their sum exceeds 1.
+        // If similarity is 1.0, truth=1.0, falsity=0.0, indeterminacy=0.0 -> total=1.0. Correct.
+        // If similarity is 0.0, truth=0.0, falsity=1.0, indeterminacy=0.0 -> total=1.0. Correct.
         double total = truth + indeterminacy + falsity;
         if (total > 1.0) {
             truth = truth / total;

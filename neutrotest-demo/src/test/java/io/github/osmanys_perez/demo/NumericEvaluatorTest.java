@@ -11,7 +11,7 @@ public class NumericEvaluatorTest {
 
     @Test
     void testApproximateEquality_Success() {
-        double calculatedValue = 1.99998; // e.g., from a complex calculation
+        double calculatedValue = 1.999998; // e.g., from a complex calculation
         double expectedValue = 2.0;
 
         // This will pass. The default tolerance (0.01) is more than enough.
@@ -20,7 +20,7 @@ public class NumericEvaluatorTest {
 
         // 2. Use a context that is strict, but not ultra-strict, for this very close match.
         NeutrosophicContext veryAccurateContext = NeutrosophicContext.builder()
-                .withTruthThreshold(0.80) // Less strict than 0.95, but stricter than default 0.8
+                .withTruthThreshold(0.9) // Less strict than 0.95, but stricter than default 0.8
                 .withIndeterminacyThreshold(0.05)
                 .withFalsityThreshold(0.20)
                 .build();

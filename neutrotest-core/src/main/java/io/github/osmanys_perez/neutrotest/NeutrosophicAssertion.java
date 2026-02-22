@@ -29,42 +29,50 @@ public final class NeutrosophicAssertion<T> {
      * Asserts that the evaluated neutrosophic value meets the success criteria
      * defined in the context (i.e., context.evaluate() returns true).
      *
+     * @return the evaluated neutrosophic value
      * @throws AssertionError if the assertion fails
      */
-    public void isTrue() {
+    public NeutrosophicValue isTrue() {
         NeutrosophicValue result = evaluator.evaluate(actual);
         if (!context.evaluate(result)) {
             throw new AssertionError(buildFailureMessage(result));
         }
+        return result;
     }
 
     /**
      * Asserts that the evaluated neutrosophic value does NOT meet the success criteria
      * defined in the context (i.e., context.evaluate() returns false).
      *
+     * @return the evaluated neutrosophic value
      * @throws AssertionError if the assertion fails (i.e., if the value IS true)
      */
-    public void isFalse() {
+    public NeutrosophicValue isFalse() {
         NeutrosophicValue result = evaluator.evaluate(actual);
         if (context.evaluate(result)) {
             throw new AssertionError(buildFailureMessageForIsFalse(result));
         }
+        return result;
     }
 
     /**
      * A more descriptive alias for {@link #isTrue()}.
      * Asserts that the proposition is accepted under the given context.
+     *
+     * @return the evaluated neutrosophic value
      */
-    public void isAccepted() {
-        isTrue();
+    public NeutrosophicValue isAccepted() {
+        return isTrue();
     }
 
     /**
      * A more descriptive alias for {@link #isFalse()}.
      * Asserts that the proposition is rejected under the given context.
+     *
+     * @return the evaluated neutrosophic value
      */
-    public void isRejected() {
-        isFalse();
+    public NeutrosophicValue isRejected() {
+        return isFalse();
     }
 
     /**
