@@ -20,10 +20,23 @@ public final class ExceptionThrownEvaluator implements Evaluator<Supplier<Object
         this.expectedMessagePattern = expectedMessagePattern;
     }
 
+    /**
+     * Creates an {@link ExceptionThrownEvaluator} that expects an exception of the specified type.
+     *
+     * @param expectedExceptionType the class of the expected exception
+     * @return a new {@code ExceptionThrownEvaluator}
+     */
     public static ExceptionThrownEvaluator throwsException(Class<? extends Throwable> expectedExceptionType) {
         return new ExceptionThrownEvaluator(expectedExceptionType, null);
     }
 
+    /**
+     * Configures a message pattern to check within the thrown exception's message.
+     * The evaluation of the message uses fuzzy matching.
+     *
+     * @param messagePattern the expected substring or pattern in the exception message
+     * @return a new {@code ExceptionThrownEvaluator} instance with the message pattern check
+     */
     public ExceptionThrownEvaluator withMessageContaining(String messagePattern) {
         return new ExceptionThrownEvaluator(this.expectedExceptionType, messagePattern);
     }

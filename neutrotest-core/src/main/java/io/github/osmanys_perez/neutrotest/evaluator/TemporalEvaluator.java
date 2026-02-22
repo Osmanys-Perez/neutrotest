@@ -27,9 +27,11 @@ public final class TemporalEvaluator<T> implements Evaluator<Supplier<T>> {
     }
 
     /**
-     * Creates a TemporalEvaluator builder for a given base evaluator.
+     * Creates a {@link TemporalEvaluator} builder for a given base evaluator.
+     *
+     * @param <T>           the type of the input to the base evaluator
      * @param baseEvaluator the evaluator that checks the condition at a point in time
-     * @return an instance of the TemporalEvaluator's builder
+     * @return an instance of the {@code TemporalEvaluator}
      */
     public static <T> TemporalEvaluator<T> untilStable(Evaluator<T> baseEvaluator) {
         return new TemporalEvaluator<>(
@@ -40,14 +42,32 @@ public final class TemporalEvaluator<T> implements Evaluator<Supplier<T>> {
         );
     }
 
+    /**
+     * Configures the maximum duration to poll for a stable result.
+     *
+     * @param timeout the maximum duration
+     * @return a new {@code TemporalEvaluator} instance with the updated timeout
+     */
     public TemporalEvaluator<T> withTimeout(Duration timeout) {
         return new TemporalEvaluator<>(this.baseEvaluator, timeout, this.pollInterval, this.stabilityThreshold);
     }
 
+    /**
+     * Configures the interval between consecutive polls.
+     *
+     * @param pollInterval the polling interval
+     * @return a new {@code TemporalEvaluator} instance with the updated poll interval
+     */
     public TemporalEvaluator<T> withPollInterval(Duration pollInterval) {
         return new TemporalEvaluator<>(this.baseEvaluator, this.timeout, pollInterval, this.stabilityThreshold);
     }
 
+    /**
+     * Configures the minimum truth value required to consider a result stable.
+     *
+     * @param stabilityThreshold a value between 0.0 and 1.0
+     * @return a new {@code TemporalEvaluator} instance with the updated stability threshold
+     */
     public TemporalEvaluator<T> withStabilityThreshold(double stabilityThreshold) {
         return new TemporalEvaluator<>(this.baseEvaluator, this.timeout, this.pollInterval, stabilityThreshold);
     }

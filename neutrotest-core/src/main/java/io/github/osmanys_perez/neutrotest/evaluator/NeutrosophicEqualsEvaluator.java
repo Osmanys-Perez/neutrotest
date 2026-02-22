@@ -18,9 +18,11 @@ public final class NeutrosophicEqualsEvaluator<T> implements Evaluator<T> {
     }
 
     /**
-     * Creates a NeutrosophicEqualsEvaluator for the expected value.
+     * Creates a {@link NeutrosophicEqualsEvaluator} for the expected value.
+     *
+     * @param <T>      the type of the value
      * @param expected the expected value to compare against
-     * @return an instance of the evaluator
+     * @return a new {@code NeutrosophicEqualsEvaluator}
      */
     public static <T> NeutrosophicEqualsEvaluator<T> comparedTo(T expected) {
         return new NeutrosophicEqualsEvaluator<>(expected);

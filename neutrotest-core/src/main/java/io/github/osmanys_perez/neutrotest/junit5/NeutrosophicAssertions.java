@@ -6,6 +6,12 @@ import io.github.osmanys_perez.neutrotest.NeutrosophicAssertion;
 import io.github.osmanys_perez.neutrotest.NeutrosophicContext;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
+/**
+ * Entry point for JUnit 5 integrated Neutrosophic assertions.
+ * <p>
+ * Use this class in tests annotated with {@link NeutrosophicTest}.
+ * It automatically retrieves the context from the JUnit {@link ExtensionContext}.
+ */
 public final class NeutrosophicAssertions {
 
     private NeutrosophicAssertions() {

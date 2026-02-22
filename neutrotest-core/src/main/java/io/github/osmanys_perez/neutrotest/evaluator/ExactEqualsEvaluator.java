@@ -18,9 +18,11 @@ public final class ExactEqualsEvaluator<T> implements Evaluator<T> {
     }
 
     /**
-     * Creates an ExactEqualsEvaluator for the expected value.
+     * Creates an {@link ExactEqualsEvaluator} for the expected value.
+     *
+     * @param <T>      the type of the value
      * @param expected the expected value to compare against
-     * @return an instance of the evaluator
+     * @return a new {@code ExactEqualsEvaluator}
      */
     public static <T> ExactEqualsEvaluator<T> comparedTo(T expected) {
         return new ExactEqualsEvaluator<>(expected);
