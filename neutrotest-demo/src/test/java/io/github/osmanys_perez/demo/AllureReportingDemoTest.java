@@ -15,14 +15,14 @@ import static io.github.osmanys_perez.neutrotest.evaluator.NumericEvaluator.comp
 
 @Epic("Reporting Integration")
 @Feature("Allure Reporting")
-public class AllureReportingDemo {
+public class AllureReportingDemoTest {
 
     @Test
     @NeutrosophicTest(truthThreshold = 0.55, indeterminacyThreshold = 0.25, falsityThreshold = 0.25)
     @DisplayName("Demonstrate Neutrosophic Metadata in Allure")
     @Story("As a tester, I want to see T, I, F values in my Allure report")
     @Description("This test performs a fuzzy string match. Allure captures the published report entries " +
-                 "and displays them in the 'Metadata' or 'Test Body' section of the report.")
+                 "and displays them as first-class 'Parameters' in the report.")
     void demonstrateAllureMetadata(ExtensionContext context) {
         String actual = "Neutrosophic Logic";
         String expected = "Neutrosophic Logic Systems";
@@ -37,7 +37,7 @@ public class AllureReportingDemo {
     @DisplayName("Demonstrate Near Miss in Allure Reports")
     @Story("As a tester, I want to identify near-miss failures in reports")
     @Description("This test is a 'Near Miss'. It fails, but the truth value is very close to the threshold. " +
-                 "The status 'NEAR MISS' will be clearly visible in Allure's published entries.")
+                 "The status 'NEAR MISS' will be clearly visible in Allure's 'Parameters' section.")
     void demonstrateNearMissInAllure(ExtensionContext context) {
         double actual = 94.5;
         double expected = 100.0;

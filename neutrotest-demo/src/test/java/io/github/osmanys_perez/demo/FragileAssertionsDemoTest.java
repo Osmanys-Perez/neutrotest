@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 import static io.github.osmanys_perez.neutrotest.evaluator.FuzzyStringEvaluator.comparedTo;
 
-public class FragileAssertionsDemo {
+public class FragileAssertionsDemoTest {
 
     @Test
     @NeutrosophicTest(truthThreshold = 0.4, indeterminacyThreshold = 0.5, falsityThreshold = 0.5)
@@ -42,13 +42,21 @@ public class FragileAssertionsDemo {
     @Test
     @NeutrosophicTest(truthThreshold = 0.5)
     void demonstrateNearMiss(ExtensionContext context) {
-        // "San Fran" vs "San Francisco" with threshold 0.5.
-        // Truth is 0.42. (Near Miss!)
-        String input = "San Fran";
-        
+        // We want a NEAR MISS status.
+        // Threshold = 0.5.
+        // NEAR MISS is triggered when truth >= (threshold - 0.05).
+        // So we need truth in [0.45, 0.5).
+
+        // Using NumericEvaluator for exact control:
+        // actual = 9.48, expected = 10.0, tolerance = 1.0
+        // diff = 0.52
+        // similarity = 1 - (0.52 / 1.0) = 0.48
+        // Truth = similarity = 0.48
+        // 0.48 is in [0.45, 0.5) -> NEAR MISS.
+
         System.out.println("Running Near Miss Demo...");
         try {
-            NeutrosophicAssertions.assertThat(input, comparedTo("San Francisco").withPerfectMatchThreshold(0.95), context)
+            NeutrosophicAssertions.assertThat(9.48, io.github.osmanys_perez.neutrotest.evaluator.NumericEvaluator.comparedTo(10.0).withTolerance(1.0), context)
                     .isAccepted();
         } catch (AssertionError e) {
             System.out.println("Test failed as expected. Check the report for 'NEAR MISS' status!");
