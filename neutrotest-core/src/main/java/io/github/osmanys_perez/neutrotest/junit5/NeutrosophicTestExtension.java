@@ -8,6 +8,16 @@ import org.junit.jupiter.api.extension.ParameterResolver;
 
 import java.lang.reflect.Method;
 
+/**
+ * JUnit 5 extension that manages the {@link NeutrosophicContext} for tests annotated with {@link NeutrosophicTest}.
+ * <p>
+ * This extension is responsible for:
+ * <ul>
+ *   <li>Extracting configuration from the {@code @NeutrosophicTest} annotation.</li>
+ *   <li>Initializing and storing the appropriate {@code NeutrosophicContext} in the JUnit store.</li>
+ *   <li>Providing the {@code ExtensionContext} as a parameter to test methods if requested.</li>
+ * </ul>
+ */
 public class NeutrosophicTestExtension implements BeforeEachCallback, ParameterResolver {
 
     @Override
@@ -58,6 +68,12 @@ public class NeutrosophicTestExtension implements BeforeEachCallback, ParameterR
         return extensionContext;
     }
 
+    /**
+     * Retrieves the {@link NeutrosophicContext} from the given JUnit {@link ExtensionContext}.
+     *
+     * @param context the JUnit extension context
+     * @return the neutrosophic context, or {@code null} if not found
+     */
     public static NeutrosophicContext getContext(ExtensionContext context) {
         return context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL)
                 .get("neutrosophicContext", NeutrosophicContext.class);

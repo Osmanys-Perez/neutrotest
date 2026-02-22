@@ -21,10 +21,23 @@ public final class TimeBoundEvaluator<T> implements Evaluator<Supplier<T>> {
         this.acceptableVariance = acceptableVariance;
     }
 
+    /**
+     * Creates a {@link TimeBoundEvaluator} for an operation that is expected to complete within a given duration.
+     *
+     * @param <T>      the return type of the operation
+     * @param duration the maximum expected duration
+     * @return a new {@code TimeBoundEvaluator}
+     */
     public static <T> TimeBoundEvaluator<T> completesWithin(Duration duration) {
         return new TimeBoundEvaluator<>(duration, Duration.ofMillis(50));
     }
 
+    /**
+     * Configures the acceptable variance (buffer) beyond the maximum duration.
+     *
+     * @param variance the acceptable variance duration
+     * @return a new {@code TimeBoundEvaluator} instance with the updated variance
+     */
     public TimeBoundEvaluator<T> withVariance(Duration variance) {
         return new TimeBoundEvaluator<>(this.maxDuration, variance);
     }

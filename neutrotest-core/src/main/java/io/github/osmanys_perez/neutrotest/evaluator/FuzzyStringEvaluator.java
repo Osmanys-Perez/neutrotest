@@ -22,18 +22,21 @@ public final class FuzzyStringEvaluator implements Evaluator<String> {
     }
 
     /**
-     * Creates a FuzzyStringEvaluator builder with the expected string to compare against.
+     * Creates a {@link FuzzyStringEvaluator} with the expected string to compare against.
+     *
      * @param expected the expected string
-     * @return an instance of the evaluator's builder
+     * @return an instance of the {@code FuzzyStringEvaluator}
      */
     public static FuzzyStringEvaluator comparedTo(String expected) {
         return new FuzzyStringEvaluator(expected, 0.85); // Default threshold
     }
 
     /**
-     * Fluently sets a custom perfect match threshold.
-     * @param threshold a value between 0.0 and 1.0. 0.85 means a similarity score of 0.85 is considered a perfect match (T=1.0).
-     * @return this evaluator instance for method chaining
+     * Configures a custom perfect match threshold.
+     *
+     * @param threshold a value between 0.0 and 1.0. For example, 0.85 means a similarity
+     *                  score of 0.85 is considered a perfect match (Truth=1.0).
+     * @return a new {@code FuzzyStringEvaluator} instance with the updated threshold
      */
     public FuzzyStringEvaluator withPerfectMatchThreshold(double threshold) {
         return new FuzzyStringEvaluator(this.expected, threshold);

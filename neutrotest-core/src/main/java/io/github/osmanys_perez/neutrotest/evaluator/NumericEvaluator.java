@@ -18,18 +18,20 @@ public final class NumericEvaluator implements Evaluator<Number> {
     }
 
     /**
-     * Creates an NumericEvaluator builder with the expected number to compare against.
+     * Creates a {@link NumericEvaluator} with the expected number to compare against.
+     *
      * @param expected the expected number
-     * @return an instance of the evaluator's builder
+     * @return an instance of the {@code NumericEvaluator}
      */
     public static NumericEvaluator comparedTo(Number expected) {
         return new NumericEvaluator(expected, 0.01); // Default tolerance of 0.01
     }
 
     /**
-     * Fluently sets a custom tolerance for the comparison.
+     * Configures a custom tolerance for the comparison.
+     *
      * @param tolerance the acceptable difference between the actual and expected values
-     * @return this evaluator instance for method chaining
+     * @return a new {@code NumericEvaluator} instance with the updated tolerance
      */
     public NumericEvaluator withTolerance(double tolerance) {
         return new NumericEvaluator(this.expected, tolerance);

@@ -19,8 +19,12 @@ public final class CollectionContainsEvaluator<T> implements Evaluator<Collectio
     }
 
     /**
-     * Creates a CollectionContainsEvaluator that checks if the collection contains
+     * Creates a {@link CollectionContainsEvaluator} that checks if the collection contains
      * an element matching the given evaluator's criteria.
+     *
+     * @param <T>              the type of elements in the collection
+     * @param elementEvaluator the evaluator to apply to individual elements
+     * @return a new {@code CollectionContainsEvaluator}
      */
     public static <T> CollectionContainsEvaluator<T> anElementThat(Evaluator<T> elementEvaluator) {
         return new CollectionContainsEvaluator<>(elementEvaluator);
