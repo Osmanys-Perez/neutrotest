@@ -11,7 +11,7 @@ public interface NeutrosophicResultReporter {
      * Reports the result of a Neutrosophic assertion.
      *
      * @param context   the JUnit extension context
-     * @param status    the interpreted status (PASSED, FRAGILE PASS, NEAR MISS, FAILED)
+     * @param status    the interpreted status (PASSED, FRAGILE PASS, BORDERLINE FAIL, FAILED)
      * @param value     the actual Neutrosophic value
      * @param threshold the truth threshold used for evaluation
      */

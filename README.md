@@ -20,7 +20,7 @@ Neutrotest doesn't just pass or fail; it provides detailed insights into *why* a
 
 - **Nuanced Statuses**: Beyond `PASSED` and `FAILED`, Neutrotest identifies:
     - **`FRAGILE PASS`**: The test passed, but it was close to the failure threshold.
-    - **`NEAR MISS`**: The test failed, but it was almost a pass.
+    - **`BORDERLINE FAIL`**: The test failed, but it was almost a pass.
 - **Allure Integration**: Neutrosophic values (T, I, F) and statuses are automatically published to **Allure Reports** as **test parameters**. This makes them immediately visible in the report's "Parameters" section for every assertion.
 - **JUnit 5 Compatibility**: For other reporters (like Surefire or IDE consoles), the data is published via standard JUnit `publishReportEntry`, ensuring it's captured across different testing ecosystems.
 - **Metadata Visibility**: You can see the exact (T, I, F) triplet for every assertion, allowing for deep analysis of why a "fuzzy" result was accepted or rejected.

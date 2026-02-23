@@ -41,10 +41,10 @@ public class FragileAssertionsDemoTest {
 
     @Test
     @NeutrosophicTest(truthThreshold = 0.5)
-    void demonstrateNearMiss(ExtensionContext context) {
-        // We want a NEAR MISS status.
+    void demonstrateBorderlineFail(ExtensionContext context) {
+        // We want a BORDERLINE FAIL status.
         // Threshold = 0.5.
-        // NEAR MISS is triggered when truth >= (threshold - 0.05).
+        // BORDERLINE FAIL is triggered when truth >= (threshold - 0.05).
         // So we need truth in [0.45, 0.5).
 
         // Using NumericEvaluator for exact control:
@@ -52,14 +52,14 @@ public class FragileAssertionsDemoTest {
         // diff = 0.52
         // similarity = 1 - (0.52 / 1.0) = 0.48
         // Truth = similarity = 0.48
-        // 0.48 is in [0.45, 0.5) -> NEAR MISS.
+        // 0.48 is in [0.45, 0.5) -> BORDERLINE FAIL.
 
-        System.out.println("Running Near Miss Demo...");
+        System.out.println("Running Borderline Fail Demo...");
         try {
             NeutrosophicAssertions.assertThat(9.48, io.github.osmanys_perez.neutrotest.evaluator.NumericEvaluator.comparedTo(10.0).withTolerance(1.0), context)
                     .isAccepted();
         } catch (AssertionError e) {
-            System.out.println("Test failed as expected. Check the report for 'NEAR MISS' status!");
+            System.out.println("Test failed as expected. Check the report for 'BORDERLINE FAIL' status!");
             return;
         }
         throw new AssertionError("Expected test to fail but it passed!");

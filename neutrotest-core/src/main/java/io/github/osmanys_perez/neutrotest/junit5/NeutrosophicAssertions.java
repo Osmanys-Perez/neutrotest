@@ -127,7 +127,7 @@ public final class NeutrosophicAssertions {
                 }
             } else {
                 if (truth >= threshold - 0.05) {
-                    status = "NEAR MISS";
+                    status = "BORDERLINE FAIL";
                 } else {
                     status = "FAILED";
                 }
