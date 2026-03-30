@@ -77,4 +77,9 @@ public final class TimeBoundEvaluator<T> implements Evaluator<Supplier<T>> {
             return new NeutrosophicValue(truth, indeterminacy, 1 - truth - indeterminacy);
         }
     }
+
+    @Override
+    public String getExpectedValueDescription() {
+        return "Completion within " + maxDuration.toString();
+    }
 }

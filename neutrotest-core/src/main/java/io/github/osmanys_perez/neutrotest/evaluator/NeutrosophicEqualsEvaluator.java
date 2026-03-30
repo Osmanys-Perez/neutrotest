@@ -53,4 +53,11 @@ public final class NeutrosophicEqualsEvaluator<T> implements Evaluator<T> {
             return new NeutrosophicValue(0.05, 0.15, 0.80);
         }
     }
+
+    @Override
+    public String getExpectedValueDescription() {
+        if (expected == null) return "null";
+        if (expected instanceof CharSequence) return "\"" + expected + "\"";
+        return expected.toString();
+    }
 }

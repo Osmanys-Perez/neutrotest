@@ -36,4 +36,11 @@ public final class ExactEqualsEvaluator<T> implements Evaluator<T> {
             return NeutrosophicValue.FALSE; // (T=0.0, I=0.0, F=1.0)
         }
     }
+
+    @Override
+    public String getExpectedValueDescription() {
+        if (expected == null) return "null";
+        if (expected instanceof CharSequence) return "\"" + expected + "\"";
+        return expected.toString();
+    }
 }

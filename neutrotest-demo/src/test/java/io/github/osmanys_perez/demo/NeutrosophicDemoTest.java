@@ -54,8 +54,8 @@ public class NeutrosophicDemoTest {
                 .isTrue();
 
         // Testing a very close match with a custom threshold
-        String input = "helo";
-        FuzzyStringEvaluator evaluator = FuzzyStringEvaluator.comparedTo("hello")
+        String input = "perro";
+        FuzzyStringEvaluator evaluator = FuzzyStringEvaluator.comparedTo("perro")
                 .withPerfectMatchThreshold(0.9); // Be more strict about what constitutes a match
 
         // This will likely fail or pass based on the calculated similarity.

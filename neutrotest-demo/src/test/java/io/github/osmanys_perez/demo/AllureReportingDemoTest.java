@@ -33,7 +33,7 @@ public class AllureReportingDemoTest {
     }
 
     @Test
-    @NeutrosophicTest(truthThreshold = 0.95)
+    @NeutrosophicTest(truthThreshold = 0.96)
     @DisplayName("Demonstrate Borderline Fail in Allure Reports")
     @Story("As a tester, I want to identify borderline failures in reports")
     @Description("This test is a 'Borderline Fail'. It fails, but the truth value is very close to the threshold. " +
@@ -42,15 +42,11 @@ public class AllureReportingDemoTest {
         double actual = 94.5;
         double expected = 100.0;
 
-        try {
-            // NumericEvaluator logic:
-            // diff = 5.5, tolerance = 100.0 -> similarity = 1.0 - 5.5/100 = 0.945
-            // With threshold 0.95, 0.945 is within the 0.05 margin (0.90 to 0.95) -> BORDERLINE FAIL
+        // NumericEvaluator logic:
+        // diff = 5.5, tolerance = 100.0 -> similarity = 1.0 - 5.5/100 = 0.945
+        // With threshold 0.95, 0.945 is within the 0.05 margin (0.90 to 0.95) -> BORDERLINE FAIL
 
-            NeutrosophicAssertions.assertThat(actual, comparedTo(expected).withTolerance(100.0), context)
-                    .isAccepted();
-        } catch (AssertionError e) {
-            System.out.println("Expected failure for Allure demo: " + e.getMessage());
-        }
+        NeutrosophicAssertions.assertThat(actual, comparedTo(expected).withTolerance(90.0), context)
+                .isAccepted();
     }
 }

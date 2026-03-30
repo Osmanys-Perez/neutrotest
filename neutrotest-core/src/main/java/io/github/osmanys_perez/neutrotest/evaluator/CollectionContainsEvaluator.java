@@ -60,4 +60,10 @@ public final class CollectionContainsEvaluator<T> implements Evaluator<Collectio
 
         return new NeutrosophicValue(0.0, 0.2, 0.8);
     }
+
+    @Override
+    public String getExpectedValueDescription() {
+        String elementExpected = elementEvaluator.getExpectedValueDescription();
+        return "An element that " + (elementExpected != null ? "matches: " + elementExpected : "meets criteria");
+    }
 }

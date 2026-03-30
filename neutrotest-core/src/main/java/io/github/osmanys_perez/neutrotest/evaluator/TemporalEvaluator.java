@@ -143,4 +143,14 @@ public final class TemporalEvaluator<T> implements Evaluator<Supplier<T>> {
 
         return new NeutrosophicValue(truth, indeterminacy, falsity);
     }
+
+    @Override
+    public String getExpectedValueDescription() {
+        String baseExpected = baseEvaluator.getExpectedValueDescription();
+        String description = "Stability within " + timeout.toString();
+        if (baseExpected != null) {
+            description += " (Expected: " + baseExpected + ")";
+        }
+        return description;
+    }
 }

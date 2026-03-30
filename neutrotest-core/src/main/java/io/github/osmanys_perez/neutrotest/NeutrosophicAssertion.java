@@ -80,32 +80,35 @@ public final class NeutrosophicAssertion<T> {
      * This message is crucial for debugging and understanding why the test failed.
      */
     private String buildFailureMessage(NeutrosophicValue result) {
-        return String.format(
-                Locale.US,
-                "%n" +
-                        "Neutrosophic Assertion Failed:%n" +
-                        "  Actual value.......: %s%n" +
-                        "  Evaluated to.......: %s%n" +
-                        "  But context required: Truth >= %.2f, Indeterminacy < %.2f, Falsity < %.2f%n" +
-                        "  Context (Tolerance): %.4f",
-                formatActual(), result, context.truthThreshold(),
-                context.indeterminacyThreshold(), context.falsityThreshold(),
-                context.tolerance()
-        );
+        String expectedDesc = evaluator.getExpectedValueDescription();
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(Locale.US, "%nNeutrosophic Assertion Failed:%n"));
+        sb.append(String.format(Locale.US, "  Actual value.......: %s%n", formatActual()));
+        if (expectedDesc != null) {
+            sb.append(String.format(Locale.US, "  Expected value.....: %s%n", expectedDesc));
+        }
+        sb.append(String.format(Locale.US, "  Evaluated to.......: %s%n", result));
+        sb.append(String.format(Locale.US, "  But context required: Truth >= %.2f, Indeterminacy < %.2f, Falsity < %.2f%n",
+                context.truthThreshold(), context.indeterminacyThreshold(), context.falsityThreshold()));
+        sb.append(String.format(Locale.US, "  Context (Tolerance): %.4f", context.tolerance()));
+
+        return sb.toString();
     }
 
     private String buildFailureMessageForIsFalse(NeutrosophicValue result) {
-        return String.format(
-                Locale.US,
-                "%n" +
-                        "Neutrosophic Assertion Failed:%n" +
-                        "  Actual value.......: %s%n" +
-                        "  Evaluated to.......: %s%n" +
-                        "  Context required this to be *false* (not accepted), but it was true.%n" +
-                        "  Context thresholds.: Truth >= %.2f, Indeterminacy < %.2f, Falsity < %.2f",
-                formatActual(), result, context.truthThreshold(),
-                context.indeterminacyThreshold(), context.falsityThreshold()
-        );
+        String expectedDesc = evaluator.getExpectedValueDescription();
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(Locale.US, "%nNeutrosophic Assertion Failed:%n"));
+        sb.append(String.format(Locale.US, "  Actual value.......: %s%n", formatActual()));
+        if (expectedDesc != null) {
+            sb.append(String.format(Locale.US, "  Expected value.....: %s%n", expectedDesc));
+        }
+        sb.append(String.format(Locale.US, "  Evaluated to.......: %s%n", result));
+        sb.append(String.format(Locale.US, "  Context required this to be *false* (not accepted), but it was true.%n"));
+        sb.append(String.format(Locale.US, "  Context thresholds.: Truth >= %.2f, Indeterminacy < %.2f, Falsity < %.2f",
+                context.truthThreshold(), context.indeterminacyThreshold(), context.falsityThreshold()));
+
+        return sb.toString();
     }
 
     private String formatActual() {

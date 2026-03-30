@@ -93,4 +93,14 @@ public final class ExceptionThrownEvaluator implements Evaluator<Supplier<Object
                 .withPerfectMatchThreshold(0.7);
         return fuzzyMatcher.evaluate(actualLower).truth();
     }
+
+    @Override
+    public String getExpectedValueDescription() {
+        StringBuilder sb = new StringBuilder("Exception of type ");
+        sb.append(expectedExceptionType.getSimpleName());
+        if (expectedMessagePattern != null) {
+            sb.append(" with message containing \"").append(expectedMessagePattern).append("\"");
+        }
+        return sb.toString();
+    }
 }

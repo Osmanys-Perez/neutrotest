@@ -55,13 +55,7 @@ public class FragileAssertionsDemoTest {
         // 0.48 is in [0.45, 0.5) -> BORDERLINE FAIL.
 
         System.out.println("Running Borderline Fail Demo...");
-        try {
-            NeutrosophicAssertions.assertThat(9.48, io.github.osmanys_perez.neutrotest.evaluator.NumericEvaluator.comparedTo(10.0).withTolerance(1.0), context)
-                    .isAccepted();
-        } catch (AssertionError e) {
-            System.out.println("Test failed as expected. Check the report for 'BORDERLINE FAIL' status!");
-            return;
-        }
-        throw new AssertionError("Expected test to fail but it passed!");
+        NeutrosophicAssertions.assertThat(9.48, io.github.osmanys_perez.neutrotest.evaluator.NumericEvaluator.comparedTo(10.0).withTolerance(1.0), context)
+                .isAccepted();
     }
 }

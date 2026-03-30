@@ -15,4 +15,14 @@ public interface Evaluator<T> {
      * @return the neutrosophic result of the evaluation
      */
     NeutrosophicValue evaluate(T input);
+
+    /**
+     * Returns a human-readable description of the expected value or condition.
+     * This is useful for providing more detailed failure messages in assertions.
+     *
+     * @return a description of what was expected, or null if not applicable
+     */
+    default String getExpectedValueDescription() {
+        return null;
+    }
 }

@@ -26,10 +26,10 @@ public final class NeutrosophicAssertions {
         REPORTERS.add((context, status, value, threshold) ->
             context.publishReportEntry(Map.of(
                 "Neutrosophic Status", status,
-                "Truth", String.valueOf(value.truth()),
-                "Indeterminacy", String.valueOf(value.indeterminacy()),
-                "Falsity", String.valueOf(value.falsity()),
-                "Threshold", String.valueOf(threshold)
+                "Truth", format(value.truth()),
+                "Indeterminacy", format(value.indeterminacy()),
+                "Falsity", format(value.falsity()),
+                "Threshold", format(threshold)
             ))
         );
 
@@ -40,6 +40,10 @@ public final class NeutrosophicAssertions {
         } catch (ClassNotFoundException e) {
             // Allure not on classpath
         }
+    }
+
+    private static String format(double value) {
+        return String.format(java.util.Locale.US, "%.2f", value);
     }
 
     private NeutrosophicAssertions() {
@@ -120,13 +124,13 @@ public final class NeutrosophicAssertions {
             double threshold = neutrosophicContext.truthThreshold();
 
             if (passed) {
-                if (truth < 1.0 && truth < threshold + 0.05) {
+                if (truth < 1.0 && (truth - threshold) < 0.051) {
                     status = "FRAGILE PASS";
                 } else {
                     status = "PASSED";
                 }
             } else {
-                if (truth >= threshold - 0.05) {
+                if (truth >= threshold - 0.051) {
                     status = "BORDERLINE FAIL";
                 } else {
                     status = "FAILED";
@@ -153,10 +157,17 @@ public final class NeutrosophicAssertions {
         @Override
         public void report(ExtensionContext context, String status, NeutrosophicValue value, double threshold) {
             io.qameta.allure.Allure.parameter("Neutrosophic Status", status);
-            io.qameta.allure.Allure.parameter("Truth", value.truth());
-            io.qameta.allure.Allure.parameter("Indeterminacy", value.indeterminacy());
-            io.qameta.allure.Allure.parameter("Falsity", value.falsity());
-            io.qameta.allure.Allure.parameter("Threshold", threshold);
+            io.qameta.allure.Allure.parameter("Truth", format(value.truth()));
+            io.qameta.allure.Allure.parameter("Indeterminacy", format(value.indeterminacy()));
+            io.qameta.allure.Allure.parameter("Falsity", format(value.falsity()));
+            io.qameta.allure.Allure.parameter("Threshold", format(threshold));
+
+            // Apply Status Overlay via Tags
+            if ("FRAGILE PASS".equals(status)) {
+                io.qameta.allure.Allure.label("tag", "FRAGILE-PASS");
+            } else if ("BORDERLINE FAIL".equals(status)) {
+                io.qameta.allure.Allure.label("tag", "BORDERLINE-FAIL");
+            }
         }
     }
 }

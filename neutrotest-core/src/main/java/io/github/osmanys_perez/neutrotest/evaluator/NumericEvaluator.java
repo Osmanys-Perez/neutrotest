@@ -80,4 +80,9 @@ public final class NumericEvaluator implements Evaluator<Number> {
 
         return new NeutrosophicValue(truth, indeterminacy, falsity);
     }
+
+    @Override
+    public String getExpectedValueDescription() {
+        return expected == null ? "null" : expected.toString();
+    }
 }

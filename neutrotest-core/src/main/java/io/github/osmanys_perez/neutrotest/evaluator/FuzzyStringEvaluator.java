@@ -94,6 +94,11 @@ public final class FuzzyStringEvaluator implements Evaluator<String> {
         return new NeutrosophicValue(truth, indeterminacy, falsity);
     }
 
+    @Override
+    public String getExpectedValueDescription() {
+        return expected == null ? "null" : "\"" + expected + "\"";
+    }
+
     /**
      * Calculates a normalized similarity score between 0.0 (completely different) and 1.0 (identical).
      * Uses Levenshtein distance.
