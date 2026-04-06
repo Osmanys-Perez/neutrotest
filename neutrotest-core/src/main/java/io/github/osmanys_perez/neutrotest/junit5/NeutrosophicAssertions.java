@@ -113,37 +113,41 @@ public final class NeutrosophicAssertions {
             } catch (AssertionError e) {
                 // If it fails, we evaluate it ourselves to get the result for the report
                 NeutrosophicValue result = evaluator.evaluate(actual);
+                String status = determineStatus(result, false);
                 publishResult(result, false);
-                throw e;
+                throw new AssertionError(status + ": " + e.getMessage());
             }
         }
 
         private void publishResult(NeutrosophicValue value, boolean passed) {
-            String status;
+            String status = determineStatus(value, passed);
+
+            // Notify all registered reporters
+            for (NeutrosophicResultReporter reporter : REPORTERS) {
+                try {
+                    reporter.report(extensionContext, status, value, neutrosophicContext.truthThreshold());
+                } catch (Exception e) {
+                    // Fail-safe: don't let a reporter crash the test
+                    System.err.println("Error in Neutrosophic reporter: " + e.getMessage());
+                }
+            }
+        }
+
+        private String determineStatus(NeutrosophicValue value, boolean passed) {
             double truth = value.truth();
             double threshold = neutrosophicContext.truthThreshold();
 
             if (passed) {
                 if (truth < 1.0 && (truth - threshold) < 0.051) {
-                    status = "FRAGILE PASS";
+                    return "FRAGILE PASS";
                 } else {
-                    status = "PASSED";
+                    return "PASSED";
                 }
             } else {
                 if (truth >= threshold - 0.051) {
-                    status = "BORDERLINE FAIL";
+                    return "BORDERLINE FAIL";
                 } else {
-                    status = "FAILED";
-                }
-            }
-
-            // Notify all registered reporters
-            for (NeutrosophicResultReporter reporter : REPORTERS) {
-                try {
-                    reporter.report(extensionContext, status, value, threshold);
-                } catch (Exception e) {
-                    // Fail-safe: don't let a reporter crash the test
-                    System.err.println("Error in Neutrosophic reporter: " + e.getMessage());
+                    return "FAILED";
                 }
             }
         }
@@ -161,6 +165,13 @@ public final class NeutrosophicAssertions {
             io.qameta.allure.Allure.parameter("Indeterminacy", format(value.indeterminacy()));
             io.qameta.allure.Allure.parameter("Falsity", format(value.falsity()));
             io.qameta.allure.Allure.parameter("Threshold", format(threshold));
+
+            // Inject status into Allure StatusDetails so messageRegex can catch it (passed tests only)
+            if ("FRAGILE PASS".equals(status)) {
+                io.qameta.allure.Allure.getLifecycle().updateTestCase(t -> 
+                    t.setStatusDetails(new io.qameta.allure.model.StatusDetails().setMessage("FRAGILE PASS"))
+                );
+            }
 
             // Apply Status Overlay via Tags
             if ("FRAGILE PASS".equals(status)) {

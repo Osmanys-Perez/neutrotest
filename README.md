@@ -21,10 +21,8 @@ Neutrotest doesn't just pass or fail; it provides detailed insights into *why* a
 - **Nuanced Statuses**: Beyond `PASSED` and `FAILED`, Neutrotest identifies:
     - **`FRAGILE PASS`**: The test passed, but it was close to the failure threshold.
     - **`BORDERLINE FAIL`**: The test failed, but it was almost a pass.
-- **Searchable Tags (Allure Only)**: These statuses are also applied as **Tags** to the Allure report:
-    - **`FRAGILE-PASS`**
-    - **`BORDERLINE-FAIL`**
-    - This allows you to easily filter and find specific results by searching for `tag:FRAGILE-PASS` or `tag:BORDERLINE-FAIL` in the Allure UI.
+- **Searchable Tags (Allure Only)**: Results are automatically tagged with **`FRAGILE-PASS`** or **`BORDERLINE-FAIL`**, making it easy to filter and find specific results by searching for `tag:FRAGILE-PASS` or `tag:BORDERLINE-FAIL` in the Allure UI.
+- **Custom Categories**: The library supports Allure Categories, grouping tests into **"Fragile Pass Results"** and **"Borderline Fail Results"** for a high-level overview of test suite health.
 - **Allure Integration**: Neutrosophic values (T, I, F) and statuses are automatically published to **Allure Reports** as **test parameters**. This makes them immediately visible in the report's "Parameters" section for every assertion.
 - **JUnit 5 Compatibility**: For other reporters (like Surefire or IDE consoles), the data is published via standard JUnit `publishReportEntry`, ensuring it's captured across different testing ecosystems.
 - **Metadata Visibility**: You can see the exact (T, I, F) triplet for every assertion, allowing for deep analysis of why a "fuzzy" result was accepted or rejected.

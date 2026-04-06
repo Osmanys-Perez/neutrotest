@@ -1,0 +1,16 @@
+﻿[
+  { 
+    "name": "Borderline Fail Results", 
+    "matchedStatuses": ["failed"], 
+    "messageRegex": ".*BORDERLINE FAIL.*" 
+  }, 
+  { 
+    "name": "Fragile Pass Results", 
+    "matchedStatuses": ["passed"],
+    "messageRegex": ".*FRAGILE PASS.*"
+  }, 
+  { 
+    "name": "Product defects", 
+    "matchedStatuses": ["failed"] 
+  }
+]
